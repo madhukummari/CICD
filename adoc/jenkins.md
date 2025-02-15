@@ -45,3 +45,6 @@ cat ~/.ssh/jenkins_key
 ID: jenkins-ssh-key
 Description: "SSH key for Jenkins to deploy"
 
+# Generate SSH key:
+# ssh-keygen -t rsa -b 4096 -f ~/.ssh/jenkins_key
+# copy content of jenkins_key.pub manually to targetserver's (append) authorised_keys

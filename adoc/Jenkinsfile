@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment{
-        WEBSERVER = "3.86.198.36"
+        WEBSERVER = "54.234.22.220"
     }
     stages{
         stage("source checkout"){
