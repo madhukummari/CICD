@@ -5,3 +5,4 @@ adoc/darwin_amd64/
 # adoc/darwin_amd64/terraform-provider-aws_v5.86.0_x5
 adoc/terraform.tfstate
 adoc/terraform.tfstate.backup
+adoc/frontend/node_modules

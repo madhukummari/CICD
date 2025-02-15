@@ -6,34 +6,35 @@ pipeline {
     stages {
         stage("source checkout") {
             steps {
-                git 'https://github.com/madhukummari/CICD.git'
+                git 'https://github.com/madhukummari/CICD.git' // Clones the whole repo
             }
         }
 
         stage('install dependencies') {
             steps {
-                sh """
-                 cd /adoc/frontend
-                 npm install
-                 """
+                dir('adoc/frontend') { // Navigate to frontend folder
+                    sh 'npm install'
+                }
             }
         }
 
         stage('build react app') {
             steps {
-                sh 'npm run build'
+                dir('adoc/frontend') { // Navigate to frontend folder
+                    sh 'npm run build'
+                }
             }
         }
 
         stage('deploy to nginx') {
             steps {
                 sshagent(['jenkins-ssh-key']) {
-                    sh 'scp -r * ubuntu@${WEBSERVER}:/var/www/react-app/build'
+                    sh 'scp -r adoc/frontend/build/* ubuntu@${WEBSERVER}:/var/www/react-app/'
                 }
             }
         }
 
-        stage('restart') {
+        stage('restart nginx') {
             steps {
                 sshagent(['jenkins-ssh-key']) {
                     sh 'ssh ubuntu@${WEBSERVER} "sudo systemctl restart nginx"'
