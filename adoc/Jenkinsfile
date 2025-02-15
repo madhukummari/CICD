@@ -25,12 +25,12 @@ pipeline {
                 }
             }
         }
-        
+
 
         stage('deploy to nginx') {
             steps {
                 sshagent(['jenkins-ssh-key']) {
-                    sh 'scp -r adoc/frontend/build/* ubuntu@${WEBSERVER}:/var/www/react-app/'
+                    sh 'scp -o StrictHostKeyChecking=no -r adoc/frontend/build/* ubuntu@${WEBSERVER}:/var/www/react-app/'
                 }
             }
         }
