@@ -48,3 +48,8 @@ Description: "SSH key for Jenkins to deploy"
 # Generate SSH key:
 # ssh-keygen -t rsa -b 4096 -f ~/.ssh/jenkins_key
 # copy content of jenkins_key.pub manually to targetserver's (append) authorised_keys
+
+in webserver or app giv jenks permissions to write files
+sudo mkdir -p /var/www/react-app/
+sudo chown -R ubuntu:ubuntu /var/www/react-app/
+sudo chmod -R 775 /var/www/react-app/
