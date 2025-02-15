@@ -1,0 +1,45 @@
+pipeline{
+    agent any
+    environment{
+        WEBSERVER = "3.86.198.36"
+    }
+    stages{
+        stage("source checkout"){
+
+            steps{
+                git 'https://github.com/madhukummari/CICD.git'
+                
+            }
+
+        stage('install dependencies'){
+            steps{
+                sh 'npm install'
+            }
+        }
+        stage('build react app'){
+            steps{
+                sh 'npm run build'
+            }
+        }
+        stage('deploy to nginx'){
+            steps{
+                sshagent(['jenkins-ssh-key']){
+                    sh 'scp -r * ubuntu@${WEBSERVER}:/var/www/react-app/build'
+       
+                }
+            }
+        }
+
+        stage('restart'){
+            steps{
+                sshagent(['jenkins-ssh-key']){
+                   
+                    sh  'ssh ubuntu@${WEBSERVER} "sudo systemctl restart nginx"'
+                  
+                }
+            }
+        }
+
+        }
+    }
+}
