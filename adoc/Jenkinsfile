@@ -25,6 +25,7 @@ pipeline {
                 }
             }
         }
+        
 
         stage('deploy to nginx') {
             steps {
