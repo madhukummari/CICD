@@ -2,24 +2,33 @@
 
 server {
     listen 80;
-    server_name your-server-ip;  # Change to your domain if using one
+    server_name 54.234.22.220;  # Replace with your server's public IP or domain
 
-    root /var/www/react-app/build;  # Path where Jenkins will place the React build
+    root /var/www/react-app;   # Ensure this matches your actual build directory
     index index.html;
     
     location / {
-        try_files $uri /index.html;
+        try_files $uri $uri/ /index.html;
     }
 
-    # Caching and gzip compression for better performance
+    location /static/ {
+        root /var/www/react-app;
+    }
+
+    location /api/ {
+        proxy_pass http://backend-server-ip:port/;  # Change this if you have a backend
+    }
+
+    error_page 404 /index.html;
+
     location ~* \.(?:ico|css|js|gif|jpe?g|png|woff2?|eot|ttf|svg)$ {
         expires 6M;
         access_log off;
         add_header Cache-Control "public";
     }
-
-    error_page 404 /index.html;
 }
+
 # sudo ln -s /etc/nginx/sites-available/react-app /etc/nginx/sites-enabled/
 # sudo nginx -t  # Check for syntax errors
 # sudo systemctl reload nginx  # Apply changes
+# sudo tail -f /var/log/nginx/error.log   eror logs
