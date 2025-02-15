@@ -1,46 +1,41 @@
-pipeline{
+pipeline {
     agent any
-    environment{
+    environment {
         WEBSERVER = "54.234.22.220"
     }
-    stages{
-        stage("source checkout"){
-
-            steps{
+    stages {
+        stage("source checkout") {
+            steps {
                 git 'https://github.com/madhukummari/CICD.git'
-                
             }
+        }
 
-
-        stage('install dependencies'){
-            steps{
+        stage('install dependencies') {
+            steps {
                 sh 'npm install'
             }
         }
-        stage('build react app'){
-            steps{
+
+        stage('build react app') {
+            steps {
                 sh 'npm run build'
             }
         }
-        stage('deploy to nginx'){
-            steps{
-                sshagent(['jenkins-ssh-key']){
+
+        stage('deploy to nginx') {
+            steps {
+                sshagent(['jenkins-ssh-key']) {
                     sh 'scp -r * ubuntu@${WEBSERVER}:/var/www/react-app/build'
-       
                 }
             }
         }
 
-        stage('restart'){
-            steps{
-                sshagent(['jenkins-ssh-key']){
-                   
-                    sh  'ssh ubuntu@${WEBSERVER} "sudo systemctl restart nginx"'
-                  
+        stage('restart') {
+            steps {
+                sshagent(['jenkins-ssh-key']) {
+                    sh 'ssh ubuntu@${WEBSERVER} "sudo systemctl restart nginx"'
                 }
             }
-        }
-
         }
     }
 }
