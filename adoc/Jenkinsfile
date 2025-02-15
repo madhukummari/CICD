@@ -13,7 +13,7 @@ pipeline {
         stage('install dependencies') {
             steps {
                 sh """
-                 cd /adoc/frontent
+                 cd /adoc/frontend
                  npm install
                  """
             }
