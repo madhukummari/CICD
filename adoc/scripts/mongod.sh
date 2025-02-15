@@ -1,65 +1,42 @@
 #!/bin/bash
 
-exec > /var/log/user-data.log 2>&1
-set -x  # execute in de-bug mode
-# Exit on error
-set -e
+# Update package list and upgrade packages
+sudo apt update && sudo apt upgrade -y
 
-# Function to check if MongoDB is installed
-check_mongo_installed() {
-    if ! command -v mongod &> /dev/null; then
-        echo "🔹 MongoDB is not installed. Installing..."
-        install_mongo
-    else
-        echo "✅ MongoDB is already installed."
-    fi
-}
+# Import MongoDB public GPG key
+curl -fsSL https://pgp.mongodb.com/server-8.0.asc | sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-keyring.gpg
 
-# Function to install MongoDB on Ubuntu
-install_mongo() {
-    echo "🔹 Installing MongoDB..."
-    sudo apt update
-    sudo apt install -y mongodb
-    echo "✅ MongoDB installed successfully."
-}
+# Add MongoDB repository
+echo "deb [signed-by=/usr/share/keyrings/mongodb-server-keyring.gpg] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
 
-# Function to start MongoDB service
-start_mongo() {
-    echo "🔹 Starting MongoDB..."
-    sudo systemctl start mongodb
-    sudo systemctl enable mongodb
-    echo "✅ MongoDB started and enabled on boot."
-}
+# Update package list again
+sudo apt update
 
-# Function to insert sample data
-insert_data() {
-    echo "🔹 Inserting sample data into MongoDB..."
-    
-    # Insert sample data into the database
-    mongo stationary_db --eval '
-    db.products.insertMany([
-        { "name": "Pen", "price": 1.5 },
-        { "name": "Notebook", "price": 2.0 },
-        { "name": "Eraser", "price": 0.5 },
-        { "name": "Pencil", "price": 1.0 },
-        { "name": "Sharpener", "price": 0.75 },
-        { "name": "Ruler", "price": 1.25 },
-        { "name": "Marker", "price": 2.5 },
-        { "name": "Sketchbook", "price": 5.0 },
-        { "name": "Glue Stick", "price": 1.8 },
-        { "name": "Stapler", "price": 3.0 },
-        { "name": "Scissors", "price": 2.5 },
-        { "name": "Highlighter", "price": 1.75 },
-        { "name": "Graph Paper", "price": 3.5 },
-        { "name": "File Folder", "price": 2.2 }
-    ])
-    '
-    echo "✅ Data inserted successfully."
-}
+# Install MongoDB
+sudo apt install -y mongodb-org
 
-# Main script execution
-check_mongo_installed
-start_mongo
-insert_data
+# Start and enable MongoDB service
+sudo systemctl start mongod
+sudo systemctl enable mongod
 
-echo "🎉 MongoDB setup completed!"
+# Verify installation
+sudo systemctl status mongod
+
+
+#netstat -tulnp | grep 27017
+#tcp  0  0  0.0.0.0:27017  0.0.0.0:*  LISTEN  1234/mongod {expected listing to all}
+#tcp        0      0 127.0.0.1:27017         0.0.0.0:*               LISTEN      -  [only listing on the server]
+#  -> sudo vi /etc/mongod.conf
+# Find this section and update the bindIp:
+# net:
+#   port: 27017
+#   bindIp: 0.0.0.0  # Allows connections from any IP
+
+
+# Restart MongoDB:
+# sudo systemctl restart mongod
+# Test External Connection
+# Run this from your application server:
+
+# mongo --host 54.224.178.100 --port 27017 --eval "db.adminCommand('ping')"
+

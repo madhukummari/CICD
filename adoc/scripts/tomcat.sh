@@ -19,7 +19,7 @@ echo "export PATH=$JAVA_HOME/bin:$PATH" >> ~/.bashrc
 source ~/.bashrc
 
 # Variables for Tomcat version
-TOMCAT_VERSION=10.1.34
+TOMCAT_VERSION=10.1.35
 TOMCAT_URL=https://dlcdn.apache.org/tomcat/tomcat-10/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz
 
 # Download and Install Apache Tomcat

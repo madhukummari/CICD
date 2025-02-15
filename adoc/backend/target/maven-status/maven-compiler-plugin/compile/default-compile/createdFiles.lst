@@ -1,0 +1,5 @@
+com/example/stationary/model/Product.class
+com/example/stationary/repository/ProductRepository.class
+com/example/stationary/ServletInitializer.class
+com/example/stationary/controller/ProductController.class
+com/example/stationary/StationaryApplication.class
