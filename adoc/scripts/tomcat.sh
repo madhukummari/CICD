@@ -80,3 +80,6 @@ rm -f /tmp/apache-tomcat-${TOMCAT_VERSION}.tar.gz
 
 # Print Tomcat Access URL
 echo "Apache Tomcat ${TOMCAT_VERSION} is installed and running. Access it at: http://$(curl -s ifconfig.me):8080"
+
+
+#sudo cat /opt/tomcat/logs/catalina.out | tail -n 50
