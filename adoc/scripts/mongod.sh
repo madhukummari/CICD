@@ -43,5 +43,33 @@ sudo systemctl status mongod
 # sudo journalctl -u mongod --no-pager | tail -n 20
 # sudo tail -f /var/log/mongodb/mongod.log
 # sudo cat /var/log/mongodb/mongod.log | tail -n 20
-# from local mongosh "mongodb://mongodb-user:adminpassword@54.158.55.94:27017/stationary_db"
+# from
+# from local mac machine  "mongodb://mongodb-user:adminpassword@54.158.55.94:27017/stationary_db"
+# in the server :mongosh "mongodb://localhost:27017/stationary_db"
 
+
+# mongosh
+# use stationary_db
+# db.getUsers()
+# db.createUser({
+#   user: "mongodb-user",
+#   pwd: "adminpassword",
+#   roles: [{ role: "readWrite", db: "stationary_db" }]
+# })
+# db.products.insertMany([
+#         { "name": "Pen", "price": 1.5 },
+#         { "name": "Notebook", "price": 2.0 },
+#         { "name": "Eraser", "price": 0.5 },
+#         { "name": "Pencil", "price": 1.0 },
+#         { "name": "Sharpener", "price": 0.75 },
+#         { "name": "Ruler", "price": 1.25 },
+#         { "name": "Marker", "price": 2.5 },
+#         { "name": "Sketchbook", "price": 5.0 },
+#         { "name": "Glue Stick", "price": 1.8 },
+#         { "name": "Stapler", "price": 3.0 },
+#         { "name": "Scissors", "price": 2.5 },
+#         { "name": "Highlighter", "price": 1.75 },
+#         { "name": "Graph Paper", "price": 3.5 },
+#         { "name": "File Folder", "price": 2.2 }
+#     ])
+# db.products.getProducts().pretty()
