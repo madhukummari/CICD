@@ -1,5 +1,6 @@
 /Volumes/madhu/MADHU/Workspace/CICD/adoc/backend/src/main/java/com/example/stationary/ServletInitializer.java
 /Volumes/madhu/MADHU/Workspace/CICD/adoc/backend/src/main/java/com/example/stationary/StationaryApplication.java
+/Volumes/madhu/MADHU/Workspace/CICD/adoc/backend/src/main/java/com/example/stationary/config/CorsConfig.java
 /Volumes/madhu/MADHU/Workspace/CICD/adoc/backend/src/main/java/com/example/stationary/controller/ProductController.java
 /Volumes/madhu/MADHU/Workspace/CICD/adoc/backend/src/main/java/com/example/stationary/model/Product.java
 /Volumes/madhu/MADHU/Workspace/CICD/adoc/backend/src/main/java/com/example/stationary/repository/ProductRepository.java
