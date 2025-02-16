@@ -54,14 +54,14 @@ pipeline {
                 }
             }
         }
-        
+
 
         stage('Deploy WAR to Tomcat') {
             steps {
                 sshagent(['jenkins-ssh-key']) {
                     sh """
-                        ssh ubuntu@${APP_SERVER} "sudo systemctl stop tomcat"
-                        scp -o StrictHostKeyChecking=no adoc/backend/target/*.war ubuntu@${APP_SERVER}:${TOMCAT_HOME}/webapps/app.war
+                        ssh -o StrictHostKeyChecking=no ubuntu@${APP_SERVER} "sudo systemctl stop tomcat"
+                        scp  adoc/backend/target/*.war ubuntu@${APP_SERVER}:${TOMCAT_HOME}/webapps/app.war
                         ssh ubuntu@${APP_SERVER} "sudo systemctl start tomcat"
                     """
                 }
