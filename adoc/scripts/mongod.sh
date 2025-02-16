@@ -40,3 +40,8 @@ sudo systemctl status mongod
 
 # mongo --host 54.224.178.100 --port 27017 --eval "db.adminCommand('ping')"
 
+# sudo journalctl -u mongod --no-pager | tail -n 20
+# sudo tail -f /var/log/mongodb/mongod.log
+# sudo cat /var/log/mongodb/mongod.log | tail -n 20
+# from local mongosh "mongodb://mongodb-user:adminpassword@54.158.55.94:27017/stationary_db"
+

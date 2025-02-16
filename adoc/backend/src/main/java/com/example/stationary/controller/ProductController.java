@@ -7,7 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@CrossOrigin(origins = "http://localhost:3000")  // Allow frontend access
+@CrossOrigin(origins = "http://18.208.151.9:3000")  // Allow frontend access
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {

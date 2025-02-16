@@ -2,7 +2,7 @@
 
 server {
     listen 80;
-    server_name 54.234.22.220;  # Replace with your server's public IP or domain
+    server_name 18.208.151.9;  # Replace with your server's public IP or domain
 
     root /var/www/react-app;   # Ensure this matches your actual build directory
     index index.html;
@@ -16,7 +16,7 @@ server {
     }
 
     location /api/ {
-        proxy_pass http://backend-server-ip:port/;  # Change this if you have a backend
+        proxy_pass http://3.87.222.252:8080/;  # Change this if you have a backend
     }
 
     error_page 404 /index.html;
