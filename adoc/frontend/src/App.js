@@ -28,7 +28,7 @@ const Products = () => {
   const navigate = useNavigate(); // For navigating back to Home
 
   React.useEffect(() => {
-    fetch('http://localhost:8080/api/products')
+    fetch('http://3.87.222.252:8080/api/products')
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched products:", data); // Debugging
