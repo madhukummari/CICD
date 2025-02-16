@@ -6,3 +6,6 @@ adoc/darwin_amd64/
 adoc/terraform.tfstate
 adoc/terraform.tfstate.backup
 adoc/frontend/node_modules
+adoc/backend/target
+adoc/backend/target/stationary-0.0.1-SNAPSHOT.war
+adoc/backend/target/stationary-0.0.1-SNAPSHOT.war.original
