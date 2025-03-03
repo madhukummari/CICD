@@ -1,0 +1,30 @@
+package com.example.stationary;
+
+import com.example.stationary.model.Product;
+import com.example.stationary.repository.ProductRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DataInitializer implements CommandLineRunner {
+
+    private final ProductRepository productRepository;
+
+    public DataInitializer(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        // Check if the database is empty, and if so, add sample products
+        if (productRepository.count() == 0) {
+            Product pen = new Product("Pen", 1.5, "http://localhost:8080/images/pen.jpg");
+            Product notebook = new Product("Notebook", 2.0, "http://localhost:8080/images/notebook.jpg");
+            Product eraser = new Product("Eraser", 0.5, "http://localhost:8080/images/eraser.jpeg");
+            
+            productRepository.save(pen);
+            productRepository.save(notebook);
+            productRepository.save(eraser);
+        }
+    }
+}

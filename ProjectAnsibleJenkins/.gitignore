@@ -1,0 +1,12 @@
+ProjectWithJenkins/.terraform/
+ProjectWithJenkins/.terraform.lock.hcl
+ProjectWithJenkins/darwin_amd64/
+ProjectWithJenkins/.terraform/providers
+# ProjectWithJenkins/darwin_amd64/LICENSE.txt
+# ProjectWithJenkins/darwin_amd64/terraform-provider-aws_v5.86.0_x5
+ProjectWithJenkins/terraform.tfstate
+ProjectWithJenkins/terraform.tfstate.backup
+ProjectWithJenkins/frontend/node_modules
+ProjectWithJenkins/backend/target
+ProjectWithJenkins/backend/target/stationary-0.0.1-SNAPSHOT.war
+ProjectWithJenkins/backend/target/stationary-0.0.1-SNAPSHOT.war.original

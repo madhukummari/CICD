@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+
+    environment {
+        WEBSERVER = "18.208.151.9"    // Nginx & Frontend Server
+        APP_SERVER = "3.87.222.252" // Backend (Spring Boot + Tomcat) Server
+        TOMCAT_HOME = "/opt/tomcat"   // Tomcat installation path
+    }
+
+    stages {
+        stage("Source Checkout") {
+            steps {
+                git 'https://github.com/madhukummari/CICD.git' // Clones the whole repo
+            }
+        }
+
+        stage('Install Frontend Dependencies') {
+            steps {
+                dir('ProjectWithJenkins/frontend') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('ProjectWithJenkins/frontend') {
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Deploy Frontend to Nginx') {
+            steps {
+                sshagent(['jenkins-ssh-key']) {
+                    sh 'scp -o StrictHostKeyChecking=no -r ProjectWithJenkins/frontend/build/* ubuntu@${WEBSERVER}:/var/www/react-app/'
+                }
+            }
+        }
+
+        stage('Restart Nginx') {
+            steps {
+                sshagent(['jenkins-ssh-key']) {
+                    sh 'ssh ubuntu@${WEBSERVER} "sudo systemctl restart nginx"'
+                }
+            }
+        }
+
+        // Backend (Spring Boot WAR) Build and Deployment
+        stage('Build Backend WAR') {
+            steps {
+                dir('ProjectWithJenkins/backend') {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
+
+
+        stage('Deploy WAR to Tomcat') {
+            steps {
+                sshagent(['jenkins-ssh-key']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ubuntu@${APP_SERVER} "sudo systemctl stop tomcat"
+                        scp  ProjectWithJenkins/backend/target/*.war ubuntu@${APP_SERVER}:${TOMCAT_HOME}/webapps/ROOT.war
+                        ssh ubuntu@${APP_SERVER} "sudo systemctl start tomcat"
+                    """
+                }
+            }
+        }
+    }
+}
